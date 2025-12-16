@@ -1,0 +1,19 @@
+
+<form [formGroup]="form">
+
+    <input formControlName="name" type="text" placeholder="Name"><br>
+    @if(isInvalid('name')){
+        <span>Name is Required</span><br>
+    }
+    <input formControlName="email" type="text" placeholder="Email"><br>
+    @if(isInvalid('email')){
+        <span>Email is Required (Standard email structure 'a@a')</span><br>
+    }
+    <input formControlName="password" type="text" placeholder="Password"><br>
+    @if(isInvalid('password')){
+        <span>Password is Required (Minimum 8 characters)</span><br>
+    }
+
+    <button [disabled]="form.invalid" (click)="register()">Register</button>
+    <button (click)="signIn()">Log In</button>
+</form>
