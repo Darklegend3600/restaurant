@@ -101,3 +101,80 @@ p {
   font-size: 14px;
   margin-top: 20px;
 }
+
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+
+  .form-signin {
+    padding: 30px 20px;
+    max-width: 350px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+
+  .form-control {
+    padding: 10px 12px;
+    font-size: 15px;
+  }
+
+  .btn-primary {
+    padding: 10px;
+    font-size: 15px;
+  }
+
+  .gender-options {
+    gap: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 5px;
+    min-height: 100vh;
+  }
+
+  .form-signin {
+    padding: 20px 15px;
+    max-width: 100%;
+    border-radius: 10px;
+  }
+
+  h1 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+  }
+
+  .form-floating {
+    margin-bottom: 15px;
+  }
+
+  .form-control {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+
+  .btn-primary {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  .gender-options {
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .gender-section {
+    margin-bottom: 15px;
+  }
+
+  p {
+    font-size: 12px;
+    margin-top: 15px;
+  }
+}
