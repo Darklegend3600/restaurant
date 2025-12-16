@@ -7,13 +7,13 @@ import { Authentication } from './authentication/authentication';
 import { Cart } from './cart/cart';
 
 export const routes: Routes = [
-    // {
-    //     path: '',
-    //     redirectTo: '/home',
-    //     pathMatch: 'full'
-    // },
     {
-        path: 'authenthication',
+        path: '',
+        redirectTo: '/home',
+        pathMatch: 'full'
+    },
+    {
+        path: 'authentication',
         component: Authentication
     },
     {

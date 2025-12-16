@@ -20,13 +20,11 @@ export class Authentication implements OnInit{
     this.registerForm = this.formBuilder.group({
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
-      age: [0, [Validators.required]],
-      email: ['', [Validators.required]],
-      password: ['', [Validators.required]],
+      age: [18, [Validators.required, Validators.min(1)]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
       address: ['somewhere', [Validators.required]],
       phone: ['+995599123456', [Validators.required]],
-      zipcode: ['0178', [Validators.required]],
-      avatar: ['https://api.dicebear.com/7.x/pixel-art/svg?seed=Jane', [Validators.required]],
       gender: ['MALE', [Validators.required]]
     })
 
@@ -34,10 +32,26 @@ export class Authentication implements OnInit{
   }
 
   register(){
-    let registerData : IRegister = this.registerForm.value
+    if (this.registerForm.valid) {
+      let registerData = {
+        ...this.registerForm.value,
+        zipcode: '0178',
+        avatar: 'https://api.dicebear.com/7.x/pixel-art/svg?seed=' + this.registerForm.value.firstName
+      }
 
-    this.authenticationService.signUp(registerData).subscribe((response) => {
-      console.log(response)
-    })
+      this.authenticationService.signUp(registerData).subscribe({
+        next: (response) => {
+          console.log('Registration successful:', response)
+
+        },
+        error: (error) => {
+          console.error('Registration failed:', error)
+          console.error('Error details:', error.error)
+
+        }
+      })
+    } else {
+      console.log('Form is invalid')
+    }
   }
 }
