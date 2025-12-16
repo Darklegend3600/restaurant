@@ -12,7 +12,7 @@ export const routes: Routes = [
         pathMatch: 'full'
     },
     {
-        path: 'register',
+        path: 'authenthication',
         component: Authentication
     },
     {
