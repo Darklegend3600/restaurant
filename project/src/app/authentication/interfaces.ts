@@ -1,4 +1,4 @@
-export interface ISignUp {
+export interface IRegister {
   firstName: string
   lastName: string
   age: number
@@ -11,7 +11,7 @@ export interface ISignUp {
   gender: string
 }
 
-export interface ISignIn {
-    email: string,
-    password: string
+export interface ILogIn {
+  email: string
+  password: string
 }

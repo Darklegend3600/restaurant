@@ -1,18 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { ISignIn, ISignUp } from './interfaces';
+import { ILogIn, IRegister } from './interfaces';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
-    private http = inject(HttpClient)
 
-  signUp(signUpInfo : ISignUp){
-    return this.http.post<ISignUp>("https://api.everrest.educata.dev/auth/sign_up", signUpInfo)
+  private http = inject(HttpClient)
+
+  signUp(registrationData: IRegister){
+    return this.http.post<IRegister>("https://api.everrest.educata.dev/auth/sign_up", registrationData)
   }
 
-  signIn(signInInfo : ISignIn){
-    return this.http.post<ISignIn>("https://api.everrest.educata.dev/auth/sign_in", signInInfo)
+  signIn(logInData: ILogIn){
+    return this.http.post<ILogIn>("https://api.everrest.educata.dev/auth/sign_in", logInData)
   }
 }

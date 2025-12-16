@@ -1,8 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { AuthenticationService } from './authentication-service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { ISignIn, ISignUp } from './interfaces';
+import { AuthenticationService } from './authentication-service';
+import { IRegister } from './interfaces';
 
 @Component({
   selector: 'app-authentication',
@@ -10,63 +9,35 @@ import { ISignIn, ISignUp } from './interfaces';
   templateUrl: './authentication.html',
   styleUrl: './authentication.scss',
 })
-export class Authentication implements OnInit {
+export class Authentication implements OnInit{
+
+  registerForm! : FormGroup
+
+  private formBuilder = inject(FormBuilder)
   private authenticationService = inject(AuthenticationService)
 
-  form!: FormGroup
-
-  private fb = inject(FormBuilder)
-  private router = inject(Router)
-
   ngOnInit(): void {
-
-    this.form = this.fb.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.email, Validators.required]],
-      password: ['', [Validators.pattern('^(?=.*[A-Z]).{8,}$'), Validators.required]]
+    this.registerForm = this.formBuilder.group({
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
+      age: [0, [Validators.required]],
+      email: ['', [Validators.required]],
+      password: ['', [Validators.required]],
+      address: ['somewhere', [Validators.required]],
+      phone: ['+995599123456', [Validators.required]],
+      zipcode: ['0178', [Validators.required]],
+      avatar: ['https://api.dicebear.com/7.x/pixel-art/svg?seed=Jane', [Validators.required]],
+      gender: ['MALE', [Validators.required]]
     })
-  }
 
-  isInvalid(field: string){
-    const control = this.form.get(field)
-
-    return control!.invalid && control!.touched
+    console.log(this.registerForm)
   }
 
   register(){
-    this.signUp(this.form.value)
-  }
+    let registerData : IRegister = this.registerForm.value
 
-  signUp(formValue: any){
-
-    let signUpInfo : ISignUp = {
-      firstName: formValue.name,
-      lastName: "Doe",
-      age: 30,
-      email: formValue.email,
-      password: formValue.password,
-      address: "somewhere",
-      phone: "+995599123456",
-      zipcode: "0178",
-      avatar: "https://api.dicebear.com/7.x/pixel-art/svg?seed=Jane",
-      gender: "MALE"
-    }
-
-    this.authenticationService.signUp(signUpInfo).subscribe((response) => {
+    this.authenticationService.signUp(registerData).subscribe((response) => {
       console.log(response)
     })
-  }
-
-  signIn(){
-    let signInInfo : ISignIn = {
-          email: this.form.value.email,
-          password: this.form.value.password
-    }
-
-    this.authenticationService.signIn(signInInfo).subscribe((response) => {
-    console.log(response)
-   })
-
-   this.router.navigate(['/'])
   }
 }

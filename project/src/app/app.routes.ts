@@ -4,13 +4,14 @@ import { Menu } from './menu/menu';
 import { AboutUs } from './about-us/about-us';
 import { NotFound } from './not-found/not-found';
 import { Authentication } from './authentication/authentication';
+import { Cart } from './cart/cart';
 
 export const routes: Routes = [
-    {
-        path: '',
-        redirectTo: '/home',
-        pathMatch: 'full'
-    },
+    // {
+    //     path: '',
+    //     redirectTo: '/home',
+    //     pathMatch: 'full'
+    // },
     {
         path: 'authenthication',
         component: Authentication
@@ -20,12 +21,16 @@ export const routes: Routes = [
         component: Home
     },
     {
-        path: 'product',
+        path: 'menu',
         component: Menu
     },
     {
         path: 'about-us',
         component: AboutUs
+    },
+    {
+        path: 'cart',
+        component: Cart
     },
     {
         path: '**',
