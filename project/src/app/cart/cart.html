@@ -1,1 +1,21 @@
-<p>cart works!</p>
+<div class="container">
+  <div class="cart-container">
+    <h2>Your Cart</h2>
+    <div class="cart-content">
+      <div *ngIf="isLoading" class="loading">Loading your cart...</div>
+      <div *ngIf="!isLoading && basketItems.length === 0" class="empty-cart">Your basket is empty!</div>
+      <div *ngFor="let item of basketItems" class="dish">
+        <p>Name: {{ item.product?.name || item.name }}</p>
+        <p>Price: ${{ (item.product?.price || item.price).toFixed(2) }}</p>
+        <img [src]="item.product?.image || item.image" [alt]="item.product?.name || item.name" onerror="this.src='images/default-dish.png'">
+        <p>Quantity: {{ item.quantity || 1 }}</p>
+        <p>Subtotal: ${{ ((item.product?.price || item.price) * (item.quantity || 1)).toFixed(2) }}</p>
+        <button (click)="removeFromBasket(item.product?.id || item.id, $event.target)" class="remove-btn">Remove</button>
+      </div>
+    </div>
+    <div *ngIf="basketItems.length > 0" class="cart-total">
+      <h3>Total: ${{ total.toFixed(2) }}</h3>
+      <button (click)="clearCart()" class="clear-cart-btn">Empty Cart</button>
+    </div>
+  </div>
+</div>

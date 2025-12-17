@@ -1,1 +1,30 @@
-<p>menu works!</p>
+<div class="container">
+  <div class="menu-container">
+    <h1 class="menu-title">Our Menu</h1>
+    <div class="filters">
+      <select [(ngModel)]="vegetarianFilter" class="vegetarianFilter">
+        <option value="">Vegetarian</option>
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+      </select>
+      <select [(ngModel)]="nutsFilter" class="nutsFilter">
+        <option value="">Nuts (both)</option>
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+      </select>
+      <input type="number" [(ngModel)]="spicinessFilter" class="spicinessFilter" placeholder="Spiciness (0-4)" min="0" max="4">
+      <button (click)="filterProducts()" class="filterBtn">Filter</button>
+    </div>
+
+    <div class="dishes-container">
+      <div *ngIf="products.length === 0" class="empty-message">No dishes found</div>
+      <div *ngFor="let product of products" class="dish">
+        <p>Name: {{ product.name }}</p>
+        <p>Price: ${{ product.price.toFixed(2) }}</p>
+        <img [src]="product.image" [alt]="product.name" onerror="this.src='images/default-dish.png'">
+        <input type="number" #quantityInput class="quantityInput" placeholder="Quantity" min="1" value="1">
+        <button (click)="addToCart(product, quantityInput.valueAsNumber, $event.target)" class="addBtn">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+</div>
