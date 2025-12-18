@@ -16,6 +16,9 @@
     <div *ngIf="basketItems.length > 0" class="cart-total">
       <h3>Total: ${{ total.toFixed(2) }}</h3>
       <button (click)="clearCart()" class="clear-cart-btn">Empty Cart</button>
+      <br>
+      <br>
+      <button routerLink="/are-you-sure" class="buy-btn">Buy</button>
     </div>
   </div>
 </div>
