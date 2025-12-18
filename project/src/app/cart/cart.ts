@@ -44,7 +44,7 @@ export class Cart implements OnInit {
     const grouped = items.reduce((acc, item) => {
       const key = item.product?.id || item.productId || item.id;
       if (!acc[key]) {
-        acc[key] = { ...item, quantity: 0 };
+        acc[key] = { ...item, quantity: 0, productId: key };
       }
       acc[key].quantity += item.quantity || 1;
       return acc;

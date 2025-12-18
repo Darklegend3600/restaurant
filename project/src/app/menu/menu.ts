@@ -100,7 +100,6 @@ export class Menu implements OnInit{
 
           let addObject = {
             quantity: quantity,
-            price: product.price,
             productId: product.id
           }
           this.menuService.addToBasket(addObject).subscribe({
