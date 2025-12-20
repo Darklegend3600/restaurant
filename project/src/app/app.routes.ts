@@ -1,43 +1,49 @@
-import { Routes } from '@angular/router';
-import { Home } from './home/home';
-import { Menu } from './menu/menu';
-import { AboutUs } from './about-us/about-us';
-import { NotFound } from './not-found/not-found';
-import { Authentication } from './authentication/authentication';
-import { Cart } from './cart/cart';
-import { AreYouSure } from './are-you-sure/are-you-sure';
+import { Routes } from '@angular/router'
+import { Home } from './home/home'
+import { Menu } from './menu/menu'
+import { AboutUs } from './about-us/about-us'
+import { NotFound } from './not-found/not-found'
+import { Authentication } from './authentication/authentication'
+import { Cart } from './cart/cart'
+import { AreYouSure } from './are-you-sure/are-you-sure'
+import { SignIn } from './sign-in/sign-in'
+import { authGuard } from './auth.guard'
+import { guestGuard } from './guest.guard'
+
 export const routes: Routes = [
-    {
-        path: '',
-        redirectTo: '/home',
-        pathMatch: 'full'
-    },
-    {
-        path: 'authentication',
-        component: Authentication
-    },
-    {
-        path: 'home',
-        component: Home
-    },
-    {
-        path: 'menu',
-        component: Menu
-    },
-    {
-        path: 'about-us',
-        component: AboutUs
-    },
-    {
-        path: 'cart',
-        component: Cart
-    },
-    {
-        path: 'are-you-sure',
-        component: AreYouSure
-    },
-    {
-        path: '**',
-        component: NotFound
-    },
-];
+  { path: '', 
+    redirectTo: '/authentication', 
+    pathMatch: 'full'
+ },
+
+  { path: 'authentication', 
+    component: Authentication, 
+    canActivate: [guestGuard] 
+  },
+   
+  { path: 'home', component: Home },
+  { path: 'about-us', 
+    component: AboutUs 
+  },
+  {
+  path: 'sign-in',
+  component: SignIn
+  },
+
+  { path: 'menu', 
+    component: Menu, 
+    canActivate: [authGuard] 
+  },
+  { path: 'cart', 
+    component: Cart, 
+    canActivate: [authGuard] 
+  },
+  { path: 'are-you-sure', 
+    component: AreYouSure, 
+    canActivate: [authGuard] 
+  },
+  
+  { path: '**', 
+    component: NotFound 
+  },
+]

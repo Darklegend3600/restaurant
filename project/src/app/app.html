@@ -2,21 +2,50 @@
   <div class="navbar-brand">
     <h2>Élan Bistro</h2>
   </div>
+
   <ul class="navbar-nav">
     <li class="nav-item">
       <a routerLink="/home" routerLinkActive="active" class="nav-link">Home</a>
     </li>
+
     <li class="nav-item">
       <a routerLink="/menu" routerLinkActive="active" class="nav-link">Menu</a>
     </li>
+
     <li class="nav-item">
       <a routerLink="/cart" routerLinkActive="active" class="nav-link">Cart</a>
     </li>
+
     <li class="nav-item">
       <a routerLink="/about-us" routerLinkActive="active" class="nav-link">About Us</a>
     </li>
-    <li class="nav-item">
-      <a routerLink="/authentication" routerLinkActive="active" class="nav-link">Login</a>
+       <li class="nav-item" *ngIf="!isLoggedIn()">
+      <a
+        routerLink="/sign-in"
+        routerLinkActive="active"
+        class="nav-link"
+      >
+        sign-in
+      </a>
+    </li>
+
+    <li class="nav-item" *ngIf="isLoggedIn()">
+
+    </li>
+    <li class="nav-item" *ngIf="!isLoggedIn()">
+      <a
+        routerLink="/authentication"
+        routerLinkActive="active"
+        class="nav-link"
+      >
+        Login
+      </a>
+    </li>
+
+    <li class="nav-item" *ngIf="isLoggedIn()">
+      <a class="nav-link" style="cursor: pointer" (click)="logout()">
+        Logout
+      </a>
     </li>
   </ul>
 </nav>

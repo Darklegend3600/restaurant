@@ -11,19 +11,17 @@ export class AuthenticationService {
   private readonly ACCESS_TOKEN_KEY = 'everrest_access_token'
   private readonly REFRESH_TOKEN_KEY = 'everrest_refresh_token'
 
-  signIn(logInData: ILogIn) {
-    return this.http.post<IAuthTokens>(
-      'https://api.everrest.educata.dev/auth/sign_in',
-      logInData
-    )
-  }
+  signUp(registrationData: any) {
+  return this.http.post('https://api.everrest.educata.dev/auth/sign_up', registrationData)
+}
 
-  signUp(registrationData: IRegister & { avatar?: string }) {
-    return this.http.post<IAuthTokens>(
-      'https://api.everrest.educata.dev/auth/sign_up',
-      registrationData
-    )
-  }
+signIn(logInData: any) {
+  return this.http.post<{ access_token: string; refresh_token: string }>(
+    'https://api.everrest.educata.dev/auth/sign_in',
+    logInData
+  )
+}
+
 
   saveTokens(tokens: IAuthTokens) {
     localStorage.setItem(this.ACCESS_TOKEN_KEY, tokens.access_token)
@@ -31,8 +29,12 @@ export class AuthenticationService {
   }
 
   getAccessToken(): string | null {
-    return localStorage.getItem(this.ACCESS_TOKEN_KEY)
+  return localStorage.getItem('everrest_access_token')
   }
+  getRefreshToken(): string | null {
+    return localStorage.getItem('everrest_refresh_token')
+  }
+  
 
   clearTokens() {
     localStorage.removeItem(this.ACCESS_TOKEN_KEY)
