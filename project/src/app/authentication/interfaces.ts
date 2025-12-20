@@ -7,6 +7,7 @@ export interface IRegister {
   address: string
   phone: string
   gender: string
+  zipcode : string
 }
 
 export interface ILogIn {
