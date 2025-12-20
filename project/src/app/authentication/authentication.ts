@@ -1,16 +1,14 @@
 import { Component, inject, OnInit } from '@angular/core';
-
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-
 import { DatePipe, UpperCasePipe, LowerCasePipe } from '@angular/common';
-
 import { AuthenticationService } from './authentication-service';
-
+import { RouterModule } from '@angular/router';
 import { IRegister } from './interfaces';
-
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from "@angular/router";
+import { Router} from '@angular/router';
 
 @Component({
+
 
 selector: 'app-authentication',
 
@@ -21,6 +19,7 @@ imports: [ReactiveFormsModule, DatePipe, UpperCasePipe, LowerCasePipe, RouterLin
 templateUrl: './authentication.html',
 
 styleUrl: './authentication.scss',
+
 
 })
 
