@@ -1,137 +1,107 @@
-
-.form-title {
-  text-align: center;
-  color: #333;
-  margin-bottom: 22px;
-  font-weight: 700;
-  font-size: 1.8rem;
-  letter-spacing: 0.2px;
-}
-
-.form-helper {
-  text-align: center;
-  color: #999;
-  font-size: 14px;
-  margin-top: 18px;
-}
-
-.form-helper a {
-  color: #667eea;
-  font-weight: 600;
-  text-decoration: none;
-  transition: opacity 0.2s ease;
-}
-
-.form-helper a:hover {
-  opacity: 0.85;
-  text-decoration: underline;
-}
-
-.gender-section {
-  margin-bottom: 20px;
-  padding: 14px 14px;
-  border: 2px solid #e1e5e9;
-  border-radius: 10px;
-  background: rgba(102, 126, 234, 0.06);
-}
-
-.form-label {
-  color: #555;
-  font-weight: 600;
-  display: block;
-  margin-bottom: 10px;
-  font-size: 0.95rem;
-}
-
-.gender-options {
+.container {
+  min-height: 93.1vh;
   display: flex;
-  gap: 18px;
+  align-items: center;
   justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
+  text-align: center;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
-.form-check {
-  margin: 0;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.form-signin {
+  background: #fff;
+  width: 100%;
+  max-width: 400px;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
 }
 
-.form-check-input {
-  width: 18px;
-  height: 18px;
-  border: 2px solid #cfd6dd;
-  cursor: pointer;
-  margin: 0;
-  transition: transform 0.15s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-}
 
-.form-check-input:focus {
-  box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
-  border-color: #667eea;
-}
-
-.form-check-input:checked {
-  background-color: #667eea;
-  border-color: #667eea;
-  transform: scale(1.05);
-}
-
-.form-check-label {
-  color: #666;
-  font-weight: 600;
-  cursor: pointer;
-  user-select: none;
-}
-
-.form-control.is-invalid {
-  border-color: #dc3545;
-  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.15);
-}
-
-.form-error {
-  margin-top: 6px;
-  font-size: 0.85rem;
-  color: #dc3545;
+.form-signin .form-floating {
+  margin-bottom: 20px;
   text-align: left;
-  padding-left: 2px;
 }
+
+.form-signin .form-control {
+  border: 2px solid #e1e5e9;
+  border-radius: 8px;
+  padding: 12px 15px;
+  font-size: 16px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-signin .form-control:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+.form-signin .form-floating > label {
+  color: #666;
+  font-weight: 500;
+}
+
+.form-signin .btn.btn-primary {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-signin .btn.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
 
 @media (max-width: 768px) {
-  .form-title {
-    font-size: 1.55rem;
-    margin-bottom: 18px;
+  .container {
+    padding: 10px;
   }
 
-  .gender-section {
-    padding: 12px;
+  .form-signin {
+    padding: 30px 20px;
+    max-width: 350px;
   }
 
-  .gender-options {
-    gap: 14px;
+  .form-signin .form-control {
+    padding: 10px 12px;
+    font-size: 15px;
+  }
+
+  .form-signin .btn.btn-primary {
+    padding: 10px;
+    font-size: 15px;
   }
 }
 
 @media (max-width: 480px) {
-  .form-title {
-    font-size: 1.35rem;
-    margin-bottom: 14px;
+  .container {
+    padding: 5px;
+    min-height: 100vh;
   }
 
-  .gender-section {
+  .form-signin {
+    padding: 20px 15px;
+    max-width: 100%;
+    border-radius: 10px;
+  }
+
+  .form-signin .form-floating {
     margin-bottom: 15px;
-    padding: 10px;
   }
 
-  .gender-options {
-    flex-direction: column;
-    gap: 10px;
+  .form-signin .form-control {
+    padding: 8px 10px;
+    font-size: 14px;
   }
 
-  .form-helper {
-    font-size: 12px;
-    margin-top: 14px;
+  .form-signin .btn.btn-primary {
+    padding: 8px;
+    font-size: 14px;
   }
 }
