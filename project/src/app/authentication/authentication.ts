@@ -1,7 +1,7 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthenticationService } from './authentication-service';
-import { IRegister } from './interfaces';
+import { Component, inject, OnInit } from '@angular/core'
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
+import { AuthenticationService } from './authentication-service'
+import { IAuthTokens, IRegister } from './interfaces'
 
 @Component({
   selector: 'app-authentication',
@@ -9,9 +9,8 @@ import { IRegister } from './interfaces';
   templateUrl: './authentication.html',
   styleUrl: './authentication.scss',
 })
-export class Authentication implements OnInit{
-
-  registerForm! : FormGroup
+export class Authentication implements OnInit {
+  registerForm!: FormGroup
 
   private formBuilder = inject(FormBuilder)
   private authenticationService = inject(AuthenticationService)
@@ -25,33 +24,38 @@ export class Authentication implements OnInit{
       password: ['', [Validators.required, Validators.minLength(6)]],
       address: ['somewhere', [Validators.required]],
       phone: ['+995599123456', [Validators.required]],
-      gender: ['MALE', [Validators.required]]
+      gender: ['MALE', [Validators.required]],
     })
-
-    console.log(this.registerForm)
   }
 
-  register(){
-    if (this.registerForm.valid) {
-      let registerData = {
-        ...this.registerForm.value,
-        zipcode: '0178',
-        avatar: 'https://api.dicebear.com/7.x/pixel-art/svg?seed=' + this.registerForm.value.firstName
-      }
-
-      this.authenticationService.signUp(registerData).subscribe({
-        next: (response) => {
-          console.log('Registration successful:', response)
-
-        },
-        error: (error) => {
-          console.error('Registration failed:', error)
-          console.error('Error details:', error.error)
-
-        }
-      })
-    } else {
+  register() {
+    if (!this.registerForm.valid) {
       console.log('Form is invalid')
+      this.registerForm.markAllAsTouched()
+      return
     }
+
+    let registerData: IRegister & { avatar?: string } = {
+      ...(this.registerForm.value as Omit<IRegister, 'zipcode'>),
+      zipcode: '0178',
+      avatar:
+        'https://api.dicebear.com/7.x/pixel-art/svg?seed=' +
+        this.registerForm.value.firstName,
+    }
+
+    this.authenticationService.signUp(registerData).subscribe({
+      next: (tokens: IAuthTokens) => {
+
+        this.authenticationService.saveTokens(tokens)
+
+        console.log('Registration successful. Tokens saved.', tokens)
+
+
+      },
+      error: (error) => {
+        console.error('Registration failed:', error)
+        console.error('Error details:', error?.error)
+      },
+    })
   }
 }

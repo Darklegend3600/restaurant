@@ -7,10 +7,15 @@ export interface IRegister {
   address: string
   phone: string
   gender: string
-  zipcode : string
+  zipcode: string
 }
 
 export interface ILogIn {
   email: string
   password: string
+}
+
+export interface IAuthTokens {
+  access_token: string
+  refresh_token: string
 }
