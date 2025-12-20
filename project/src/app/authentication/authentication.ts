@@ -1,12 +1,13 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthenticationService } from './authentication-service';
+import { RouterModule } from '@angular/router';
 import { IRegister } from './interfaces';
 import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-authentication',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, RouterModule],
   templateUrl: './authentication.html',
   styleUrl: './authentication.scss',
 })
