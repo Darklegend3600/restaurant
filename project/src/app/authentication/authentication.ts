@@ -1,115 +1,57 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { DatePipe, UpperCasePipe, LowerCasePipe } from '@angular/common';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthenticationService } from './authentication-service';
-import { RouterModule } from '@angular/router';
 import { IRegister } from './interfaces';
-import { RouterLink } from "@angular/router";
-import { Router} from '@angular/router';
 
 @Component({
-
-
-selector: 'app-authentication',
-
-standalone: true,
-
-imports: [ReactiveFormsModule, DatePipe, UpperCasePipe, LowerCasePipe, RouterLink],
-
-templateUrl: './authentication.html',
-
-styleUrl: './authentication.scss',
-
-
+  selector: 'app-authentication',
+  imports: [ReactiveFormsModule],
+  templateUrl: './authentication.html',
+  styleUrl: './authentication.scss',
 })
+export class Authentication implements OnInit{
 
-export class Authentication implements OnInit {
+  registerForm! : FormGroup
 
-registerForm!: FormGroup;
+  private formBuilder = inject(FormBuilder)
+  private authenticationService = inject(AuthenticationService)
 
-today = new Date();
+  ngOnInit(): void {
+    this.registerForm = this.formBuilder.group({
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
+      age: [18, [Validators.required, Validators.min(1)]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      address: ['somewhere', [Validators.required]],
+      phone: ['+995599123456', [Validators.required]],
+      gender: ['MALE', [Validators.required]]
+    })
 
-private formBuilder = inject(FormBuilder);
-
-private authenticationService = inject(AuthenticationService);
-
-private router = inject(Router);
-
-ngOnInit(): void {
-
-this.registerForm = this.formBuilder.group({
-
-  firstName: ['John'],
-
-  lastName: ['Doe'],
-
-  age: [21],
-
-  email: ['john.doe@example.com'],
-
-  password: ['Password123'],
-
-  address: ['123 Main St'],
-
-  phone: ['+995598123456'],
-
-  zipcode: ['0100']
-
-});
-
-}
-
-register() {
-
-let formValue = this.registerForm.value;
-
-
-
-let payload: IRegister = {
-  firstName: formValue.firstName,
-
-  lastName: formValue.lastName,
-
-  age: formValue.age,
-
-  email: formValue.email,
-
-  password: formValue.password,
-
-  address: formValue.address,
-
-  phone: formValue.phone,
-
-  zipcode: formValue.zipcode,
-  gender: ''
-};
-
-
-
-console.log('Payload being sent:', payload);
-
-
-
-this.authenticationService.signUp(payload).subscribe({
-
-  next: (res) => {
-
-    console.log('Signup success:', res);
-
-    this.router.navigate(['/login']);
-
-  },
-
-  error: (err) => {
-
-    console.error('Status:', err.status);
-
-    console.error('Backend message:', err.error);
-
+    console.log(this.registerForm)
   }
 
-});
+  register(){
+    if (this.registerForm.valid) {
+      let registerData = {
+        ...this.registerForm.value,
+        zipcode: '0178',
+        avatar: 'https://api.dicebear.com/7.x/pixel-art/svg?seed=' + this.registerForm.value.firstName
+      }
 
-}
+      this.authenticationService.signUp(registerData).subscribe({
+        next: (response) => {
+          console.log('Registration successful:', response)
 
+        },
+        error: (error) => {
+          console.error('Registration failed:', error)
+          console.error('Error details:', error.error)
+
+        }
+      })
+    } else {
+      console.log('Form is invalid')
+    }
+  }
 }
