@@ -37,7 +37,7 @@ export const routes: Routes = [
         component: AreYouSure
     },
     {
-        path: '**',
+        path: 'NotFound',
         component: NotFound
     },
 ];
