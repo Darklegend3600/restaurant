@@ -3,10 +3,11 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ActivatedRoute, Router } from '@angular/router'
 import { AuthenticationService } from '../authentication/authentication-service'
 import { IAuthTokens, ILogIn } from '../authentication/interfaces'
+import { CommonModule } from '@angular/common'
 
 @Component({
   selector: 'app-sign-in',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './sign-in.html',
   styleUrl: './sign-in.scss',
 })
@@ -45,17 +46,22 @@ export class SignIn implements OnInit {
     console.log('SIGN IN payload:', loginData)
 
     this.authService.signIn(loginData).subscribe({
-      next: (tokens: IAuthTokens | any) => {
+      next: (resp: any) => {
 
-        console.log('SIGN IN response:', tokens)
+        console.log('SIGN IN response:', resp)
 
-        if (!tokens?.access_token || !tokens?.refresh_token) {
-          console.error('Token response missing expected fields:', tokens)
-          this.errorMessage = 'Login failed: token was not returned by the server.'
+        const access = resp?.access_token || resp?.accessToken || resp?.token || resp?.data?.access_token || resp?.data?.accessToken
+        const refresh = resp?.refresh_token || resp?.refreshToken || resp?.data?.refresh_token || resp?.data?.refreshToken
+
+        if (!access) {
+          console.error('Token response missing expected fields:', resp)
+          const serverMsg = resp?.message || resp?.error || resp?.detail || resp?.error_description
+          this.errorMessage = serverMsg || 'Login failed: token was not returned by the server.'
           return
         }
 
-        this.authService.saveTokens(tokens)
+        const tokensToSave = { access_token: access, refresh_token: refresh || '' }
+        this.authService.saveTokens(tokensToSave)
 
         console.log('Saved access token:', this.authService.getAccessToken())
 
@@ -67,12 +73,14 @@ export class SignIn implements OnInit {
         console.error('Backend payload:', err?.error)
         console.error('Error keys:', err?.error?.errorKeys)
 
-        if (err?.error?.error === 'Invalid credentials') {
+        // surface common server error messages if present
+        const serverMsg = err?.error?.message || err?.error?.error || err?.message || (err?.error && JSON.stringify(err.error))
+        if (serverMsg?.toString()?.includes('Invalid')) {
           this.errorMessage = 'Invalid email or password.'
           return
         }
 
-        this.errorMessage = 'Sign in failed. Please try again.'
+        this.errorMessage = serverMsg || 'Sign in failed. Please try again.'
       },
     })
   }

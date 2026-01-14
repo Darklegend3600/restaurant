@@ -19,7 +19,7 @@
     <li class="nav-item">
       <a routerLink="/about-us" routerLinkActive="active" class="nav-link">About Us</a>
     </li>
-       <li class="nav-item" *ngIf="!isLoggedIn()">
+       <li class="nav-item" *ngIf="!loggedIn">
       <a
         routerLink="/sign-in"
         routerLinkActive="active"
@@ -29,10 +29,10 @@
       </a>
     </li>
 
-    <li class="nav-item" *ngIf="isLoggedIn()">
+    <li class="nav-item" *ngIf="loggedIn">
 
     </li>
-    <li class="nav-item" *ngIf="!isLoggedIn()">
+    <li class="nav-item" *ngIf="!loggedIn">
       <a
         routerLink="/authentication"
         routerLinkActive="active"
@@ -42,7 +42,7 @@
       </a>
     </li>
 
-    <li class="nav-item" *ngIf="isLoggedIn()">
+    <li class="nav-item" *ngIf="loggedIn">
       <a class="nav-link" style="cursor: pointer" (click)="logout()">
         Logout
       </a>

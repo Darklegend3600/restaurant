@@ -2,6 +2,9 @@
   <main class="form-signin w-100 m-auto">
     <form [formGroup]="registerForm">
       <h1 class="h3 mb-3 fw-normal">Please sign up</h1>
+
+      <div *ngIf="errorMessage" class="alert alert-danger" role="alert">{{ errorMessage }}</div>
+
       <div class="form-floating">
         <input
           type="email"
@@ -49,7 +52,7 @@
       <button
       class="btn btn-primary w-100 py-2"
       type="button"
-      (click)="register()" [disabled]="registerForm.invalid" routerLink="/home"
+      (click)="register()" [disabled]="registerForm.invalid"
       >Sign Up</button>
       <p class="mt-5 mb-3 text-body-secondary">© 2017–2025</p>
     </form>

@@ -4,16 +4,18 @@ import { AuthenticationService } from './authentication-service'
 import { IAuthTokens, IRegister } from './interfaces'
 import { RouterLink } from "@angular/router";
 import { ActivatedRoute, Router } from '@angular/router'
+import { CommonModule } from '@angular/common'
 
 
 @Component({
   selector: 'app-authentication',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, CommonModule],
   templateUrl: './authentication.html',
   styleUrl: './authentication.scss',
 })
 export class Authentication implements OnInit {
   registerForm!: FormGroup
+  errorMessage = ''
   
   private router = inject(Router)
   private route = inject(ActivatedRoute)
@@ -58,15 +60,24 @@ export class Authentication implements OnInit {
   }
 
   this.authenticationService.signIn(logInData).subscribe({
-    next: (tokens) => {
-      this.authenticationService.saveTokens(tokens)
+    next: (resp: any) => {
+      const access = resp?.access_token || resp?.accessToken || resp?.token || resp?.data?.access_token || resp?.data?.accessToken
+      const refresh = resp?.refresh_token || resp?.refreshToken || resp?.data?.refresh_token || resp?.data?.refreshToken
+
+      if (!access) {
+        console.error('Registration sign-in failed, no tokens:', resp)
+        console.error('Server payload:', resp)
+        return
+      }
+
+      this.authenticationService.saveTokens({ access_token: access, refresh_token: refresh || '' })
       this.router.navigate(['/home'])
     },
     error: (err) => {
-  console.error('Registration failed:', err)
-  console.error('Server payload:', err?.error)
-  console.error('Error keys:', err?.error?.errorKeys)
-}
+      console.error('Registration failed:', err)
+      console.error('Server payload:', err?.error)
+      console.error('Error keys:', err?.error?.errorKeys)
+    }
 
   })
 }

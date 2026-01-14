@@ -3,6 +3,8 @@
     <form [formGroup]="signInForm">
       <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
+      <div *ngIf="errorMessage" class="alert alert-danger" role="alert">{{ errorMessage }}</div>
+
       <div class="form-floating">
         <input
           type="email"

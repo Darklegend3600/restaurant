@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterLinkWithHref, RouterOutlet } from '@angular/router';
 import { AuthenticationService } from './authentication/authentication-service';
 
@@ -10,15 +10,17 @@ import { AuthenticationService } from './authentication/authentication-service';
   styleUrl: './app.scss'
 })
 export class App {
-   private authService = inject(AuthenticationService)
+  private authService = inject(AuthenticationService)
   private router = inject(Router)
 
-  isLoggedIn(): boolean {
-    return !!this.authService.getAccessToken()
+  loggedIn = this.authService.isAuthenticated()
+
+  constructor() {
+    this.authService.isLoggedIn$.subscribe(v => (this.loggedIn = v))
   }
 
   logout(): void {
     this.authService.clearTokens()
-    this.router.navigate(['/home'])
+    this.router.navigate(['/authentication'])
   }
 }
